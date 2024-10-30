@@ -16,4 +16,8 @@ press u + enter to show server url
 press o + enter to open in browser
 press c + enter to clear console
 press q + enter to quit
+
+cd Dashboard-Resikel
+npm install
+npm run dev (untuk run server local host)
  -->
