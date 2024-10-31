@@ -2,6 +2,12 @@
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import './App.css'
+import { Routes, Route } from "react-router-dom";
+import Beranda from "./pages/Beranda";
+import Tentang from "./pages/Tentang";
+import Layanan from "./pages/Layanan";
+import Program from "./pages/Program";
+import Navbar from "./components/Navbar";
 
 // function App() {
 //   const [count, setCount] = useState(0)
@@ -31,12 +37,30 @@
 //     </>
 //   )
 // }
-function App(){
-  return(
+// function App(){
+//   return(
+//     <>
+//     <h1>Haloo Grup AgriMadani</h1>
+//     </>
+//   )
+// }
+
+// export default App
+
+
+
+function App() {
+  return (
     <>
-    <h1>Haloo Grup AgriMadani</h1>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Beranda />} />
+        <Route path="/tentang" element={<Tentang />} />
+        <Route path="/layanan" element={<Layanan />} />
+        <Route path="/program" element={<Program />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
