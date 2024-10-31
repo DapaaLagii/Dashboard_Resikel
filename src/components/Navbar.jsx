@@ -7,13 +7,13 @@ const Navbar = () => {
         <Link to="/" className="hover:bg-blue-300 duration-300 ">
           Beranda
         </Link>
-        <Link to="/about" className="hover:bg-blue-300 duration-300 ">
+        <Link to="/tentang" className="hover:bg-blue-300 duration-300 ">
           Tentang Kami
         </Link>
-        <Link to="/contact" className="hover:bg-blue-300 duration-300 ">
+        <Link to="/layanan" className="hover:bg-blue-300 duration-300 ">
           Layanan
         </Link>
-        <Link to="/contact" className="hover:bg-blue-300 duration-300 ">
+        <Link to="/program" className="hover:bg-blue-300 duration-300 ">
           Program
         </Link>
       </nav>
