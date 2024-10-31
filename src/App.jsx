@@ -9,6 +9,23 @@ import Layanan from "./pages/Layanan";
 import Program from "./pages/Program";
 import Navbar from "./components/Navbar";
 
+
+function App() {
+    return (
+      <>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Beranda />} />
+          <Route path="/tentang" element={<Tentang />} />
+          <Route path="/layanan" element={<Layanan />} />
+          <Route path="/program" element={<Program />} />
+        </Routes>
+      </>
+    );
+  }
+  
+  export default App;
+
 // function App() {
 //   const [count, setCount] = useState(0)
 
@@ -49,18 +66,4 @@ import Navbar from "./components/Navbar";
 
 
 
-function App() {
-  return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Beranda />} />
-        <Route path="/tentang" element={<Tentang />} />
-        <Route path="/layanan" element={<Layanan />} />
-        <Route path="/program" element={<Program />} />
-      </Routes>
-    </>
-  );
-}
 
-export default App;
