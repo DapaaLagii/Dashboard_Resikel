@@ -19,14 +19,14 @@ const Beranda =  () => {
             123456789012
           </a>
         </div>
-        <nav>
+        {/* <nav>
           <ul>
             <li><a href="#">Beranda</a></li>
             <li><a href="#">Tentang Kami</a></li>
             <li><a href="#">Layanan</a></li>
             <li><a href="#">Program</a></li>
           </ul>
-        </nav>
+        </nav> */}
       </div>
       <div className="main">
         <div className="content">
