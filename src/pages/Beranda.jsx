@@ -28,7 +28,8 @@ const Beranda= () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="bg-[url(.images/bg.jpg)] bg-cover flex items-center justify-center w-full max-w-4xl rounded-lg shadow-lg mt-8 p-26 flex flex-col items-center text-center" >
+      <section className="container relative flex items-center justify-center w-full max-w-4xl rounded-lg shadow-lg mt-8 p-26 flex flex-col items-center text-center" >
+      {/* <div className="absolute inset-0 bg-center bg-no-repeat bg-contain" style={{ backgroundImage: 'url("./images/bg.jpg")' }} /> */}
         <div className="bg-green-100 p-10 flex items-center justify-center mb-4">
           <img src="./images/nokia.png" alt="App Screenshot" className="h-45" />
           <h1 className="text-3xl font-semibold text-green-800 mb-20">Malas Buang Sampah? <span className="italic text-green-600 font-bold">RESIKEL</span> Aja</h1>
