@@ -1,35 +1,4 @@
 import React from 'react';
-
-const NavBar = () => {
-    return (
-      <nav className=" text-white py-3">
-        <div className="bg-emerald-600 container mx-auto flex justify-between items-center px-4">
-          <div className="flex items-center space-x-4">
-            <a href="#" className="flex items-center space-x-2">
-              <i className="fab fa-instagram"></i>
-              <span>@Resikel</span>
-            </a>
-            <a href="#" className="flex items-center space-x-2">
-              <i className="far fa-envelope"></i>
-              <span>resikelbussines@gmail.com</span>
-            </a>
-            <a href="#" className="flex items-center space-x-2">
-              <i className="fas fa-phone"></i>
-              <span>123456789012</span>
-            </a>
-          </div>    
-        </div>
-
-        <div className="bg-white text-emerald-600 py-3 px-4 items-center space-x-6">
-            <a href="#" className="hover:text-emerald-200">Beranda</a>
-            <a href="#" className="hover:text-emerald-200">Tentang Kami</a>
-            <a href="#" className="hover:text-emerald-200">Layanan</a>
-            <a href="#" className="hover:text-emerald-200">Program</a>
-          </div>
-      </nav>
-    );
-  };
-  
   const HeroSection = () => {
     return (
       <div className="bg-gray-50 py-16">
@@ -106,70 +75,14 @@ const NavBar = () => {
       </div>
     );
   };
-  
-  const Footer = () => {
-    return (
-      <footer className="bg-white pt-16 pb-8">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h3 className="font-bold mb-4">Tentang Kami</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-600 hover:text-emerald-600">Resikel</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-emerald-600">Proposal</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-emerald-600">AgriMadani</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-bold mb-4">Layanan</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-600 hover:text-emerald-600">Rewarding</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-emerald-600">Komunitas</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-emerald-600">Jemput Sampah</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-bold mb-4">Program</h3>
-              <ul className="space-y-2">
-                <li><a href="#" className="text-gray-600 hover:text-emerald-600">Edukasi</a></li>
-                <li><a href="#" className="text-gray-600 hover:text-emerald-600">Event</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t pt-8">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <img src="/images/logo-small.png" alt="Resikel" className="h-8 mr-2" />
-                <span className="text-gray-600">© 2024 AgriMadani. All Right reserved.</span>
-              </div>
-              <div className="flex space-x-4">
-                <a href="#" className="text-gray-600 hover:text-emerald-600">
-                  <i className="fas fa-phone"></i>
-                </a>
-                <a href="#" className="text-gray-600 hover:text-emerald-600">
-                  <i className="fab fa-instagram"></i>
-                </a>
-                <a href="#" className="text-gray-600 hover:text-emerald-600">
-                  <i className="far fa-envelope"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    );
-  };
 
-
-  const Tentang = () => {
+  function Tentang (){
     return (
       <div className="min-h-screen">
-        <NavBar />
         <HeroSection />
         <MisiSection />
         <PelitaSection />
         <AgriMadaniSection />
-        <Footer />
       </div>
     );
   };
