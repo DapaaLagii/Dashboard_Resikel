@@ -64,7 +64,7 @@ function Program  ()  {
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-center mb-4">Program</h1>
         <p className="text-center text-lg mb-12">
-          Mengapa <span className="text-emerald-700">Resikel</span>?
+          Mengapa <span className="text-emerald-800">Resikel</span>?
         </p>
         <IntroductionSection />
         <EducationSection />
