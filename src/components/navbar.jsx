@@ -5,18 +5,16 @@ import { Link } from "react-router-dom";
 function Navbar() {
     return (
         <nav className="bg-white text-emerald-700 p-4">
-        <div className="container mx-auto flex justify-between items-center">
-            {/* Logo */}
+        <div className="container mx-auto flex justify-between items-center">       
             <div className="flex items-center">
                 <img 
-                    src="/assets/images/logo.png" 
+                    src="./images/logo.png" 
                     alt="Logo" 
-                    className="h-8 w-auto"
+                    className="h-12 w-auto"
                 />
             </div>
-    
-            {/* Navigation */}
-            <nav className="flex items-center gap-12" navbar> {/* Menggunakan gap-12 untuk spacing */}
+          
+            <nav className="flex items-center gap-12" navbar>
                 <Link className="nav-link hover:text-emerald-200 text-lg" to="/">
                     Beranda
                 </Link>

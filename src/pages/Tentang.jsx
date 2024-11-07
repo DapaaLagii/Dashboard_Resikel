@@ -1,30 +1,30 @@
 import React from 'react';
-  const HeroSection = () => {
-    return (
-      <div className="bg-gray-50 py-16">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-          <div className="md:w-1/2 mb-8 md:mb-0">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">#Kelola Sampah,Dapat Reward,Lebih Bersih!</h1>
-            <p className="text-lg mb-8">Bergabunglah dengan kami dan jadilah bagian dari perubahan positif bersama-sama, kita wujudkan lingkungan yang lebih baik dan lebih sehat!</p>
-            <div className="space-x-4">
-              <button className="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700">Unduh Aplikasi</button>
-              <button className="border-2 border-emerald-600 text-emerald-600 px-6 py-2 rounded-lg hover:bg-emerald-50">Lihat Selengkapnya</button>
-            </div>
-          </div>
-          <div className="md:w-1/2">
-            <img src="/images/bottles.png" alt="Bottles" className="w-full" />
-          </div>
+const HeroSection = () => {
+  return (
+    <div className="bg-gray-50 py-0.5 ">
+      <div className="container mx-auto px-4 flex flex-col items-center">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            #Kelola Sampah,Dapat Reward,Lebih Bersih!
+          </h1>
+          <p className="text-lg mb-8">
+            Bergabunglah dengan kami dan jadilah bagian dari perubahan positif bersama-sama, kita wujudkan lingkungan yang lebih baik dan lebih sehat!
+          </p>
+        </div>
+        <div className="w-full md:w-2/3 lg:w-1/2">
+          <img src="./images/bottle.png" alt="Bottles" className="w-full" />
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
   
   const MisiSection = () => {
     return (
-      <div className="bg-white py-16">
+      <div id="resikel" className="bg-white py-16">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
-          <div className="md:w-1/3">
-            <img src="/images/logo-resikel.png" alt="Resikel Logo" className="w-full max-w-xs mx-auto" />
+          <div className="md:w-1/6">
+            <img src="./images/logo2.png" alt="Resikel Logo" className="w-full max-w-xs mx-auto" />
           </div>
           <div className="md:w-2/3">
             <h2 className="text-3xl font-bold text-emerald-700 mb-4">Misi Kami Adalah Menjembatani Masyarakat</h2>
@@ -42,7 +42,7 @@ import React from 'react';
   
   const PelitaSection = () => {
     return (
-      <div className="bg-gray-50 py-16">
+      <div id="pejantara" className="bg-gray-50 py-16">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
           <div className="md:w-2/3">
             <h2 className="text-3xl font-bold text-emerald-700 mb-4">Pelita Hijau Nusantara</h2>
@@ -50,8 +50,8 @@ import React from 'react';
               Yayasan Pelita Hijau Nusantara atau yang disingkat PELITA didirikan sebagai badan hukum yang bergerak dalam bidang sosial, kemasyarakatan dan keagamaan yang berwenang dan bertanggung jawab mengelola, membina, mengembangkan dan mengkoordinasikan setiap dan seluruh pelaksanaan kegiatan lingkungan diwilayah hukum Negara Kesatuan Republik Indonesia.
             </p>
           </div>
-          <div className="md:w-1/3">
-            <img src="/images/pelita-logo.png" alt="Pelita Logo" className="w-full max-w-xs mx-auto" />
+          <div className="md:w-1/4">
+            <img src="./images/pelita.png" alt="Pelita Logo" className="w-full max-w-xs mx-auto" />
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@ import React from 'react';
   
   const AgriMadaniSection = () => {
     return (
-      <div className="bg-white py-16">
+      <div id="agrimadani" className="bg-white py-16">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
           <div className="md:w-1/3">
             <div className="text-emerald-700 text-4xl font-bold">AGRI MADANI</div>
