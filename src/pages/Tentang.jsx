@@ -68,7 +68,7 @@ const HeroSection = () => {
           <div className="md:w-2/3">
             <h2 className="text-3xl font-bold text-emerald-700 mb-4">Apa Itu AgriMadani?</h2>
             <p className="text-gray-600">
-              AgriMadan Adalah sebuah Grup yang terbentuk dengan sebuah ketulusan dan kesadaran di masyarakat kian aktif, memanfaatkan forum me pra renewable lingkungan yang nyaman di lingkungan ini juga membantu konsentrasi yang solid sehingga bersama-sama mewujudkan dalam mewujudkan lingkungan yang lebih baik
+              AgriMadani Adalah sebuah Grup yang terbentuk dengan sebuah ketulusan dan kesadaran di masyarakat kian aktif, memanfaatkan forum me pra renewable lingkungan yang nyaman di lingkungan ini juga membantu konsentrasi yang solid sehingga bersama-sama mewujudkan dalam mewujudkan lingkungan yang lebih baik
             </p>
           </div>
         </div>

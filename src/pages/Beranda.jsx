@@ -10,13 +10,13 @@ const HeroSection = () => (
           Malas Buang Sampah? <span className="italic text-emerald-700 font-bold">RESIKEL</span> Aja
         </h1>
         <div className="flex gap-4">
-      <button className="bg-green-800 text-white px-4 py-1.5 rounded hover:bg-green-500 text-sm whitespace-nowrap mt-12">
-        Unduh Aplikasi
-      </button>
+        <button className="bg-green-800 text-white px-4 py-1.5 rounded hover:bg-green-500 text-sm whitespace-nowrap mt-12">
+          Unduh Aplikasi
+        </button>
       <Link className="nav-link" to="/Tentang">
-      <button className="bg-green-800 text-white px-4 py-1.5 rounded hover:bg-green-500 text-sm whitespace-nowrap mt-12">
-        Lihat Selengkapnya
-      </button>
+        <button className="bg-green-800 text-white px-4 py-1.5 rounded hover:bg-green-500 text-sm whitespace-nowrap mt-12">
+          Lihat Selengkapnya
+        </button>
       </Link>
         </div>
       </div>
