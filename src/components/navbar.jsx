@@ -68,7 +68,6 @@ function Navbar() {
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         {isMenuOpen ? (
-                            // Ikon X
                             <path 
                                 strokeLinecap="round" 
                                 strokeLinejoin="round" 
@@ -76,7 +75,6 @@ function Navbar() {
                                 d="M6 18L18 6M6 6l12 12" 
                             />
                         ) : (
-                            // Ikon Hamburger
                             <path 
                                 strokeLinecap="round" 
                                 strokeLinejoin="round" 
@@ -88,7 +86,6 @@ function Navbar() {
                 </button>
             </div>
 
-            {/* Mobile Menu Dropdown */}
             <div 
                 className={`
                     md:hidden 
