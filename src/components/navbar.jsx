@@ -19,7 +19,6 @@ function Navbar() {
                     />
                 </div>
           
-                {/* Desktop Navigation */}
                 <div className="hidden md:flex font-medium items-center gap-12">
                     <NavLink 
                         className={({ isActive }) => 
@@ -55,7 +54,6 @@ function Navbar() {
                     </NavLink>
                 </div>
 
-                {/* Mobile Menu Button */}
                 <button 
                     onClick={toggleMenu} 
                     className="md:hidden focus:outline-none"
