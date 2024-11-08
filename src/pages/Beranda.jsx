@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const HeroSection = () => (
-  <section className="mt-10 max-w-3xl mx-auto">
+  <section className="mt-10 max-w-3xl mx-auto ">
       <div className="p-10 flex mb-4 border-4 border-emerald-800 bg-emerald-800 bg-opacity-20 rounded-2xl shadow-[5px_5px_20px_rgba(0,0,0,0.7)]">
         <img src="./images/nokia.png" alt="App Screenshot" className="h-45 self-start mt-2" />
       <div className="flex flex-col ml-6 justify-center">

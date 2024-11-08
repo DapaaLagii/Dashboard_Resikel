@@ -1,20 +1,17 @@
-import React from "react";
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function Footer(){
-  const location = useLocation();
-
+const Footer = () => {
   const scrollToSection = (sectionId) => {
-    if (location.pathname === '/tentang' || location.pathname === '/layanan' || location.pathname === '/program'); {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
-    return(
-            <footer className="w-full bg-white text-green-800 mt-auto py-8">
-              <div className="max-w-4xl mx-auto grid grid-cols-3 gap-8 text-center">
+
+  return (
+    <footer className="w-full bg-white text-green-800 mt-auto py-8">
+      <div className="max-w-4xl mx-auto grid grid-cols-3 gap-8 text-center">
         <div>
           <h2 className="font-semibold">Tentang Kami</h2>
           <ul className="mt-2 space-y-1">
@@ -83,38 +80,62 @@ function Footer(){
           </ul>
         </div>
       </div>
-              <div className="mt-16">
-                <hr className="border-t border-gray-300 mb-2" />
-                <div className="flex flex-col md:flex-row items-center justify-between px-4 space-y-4 md:space-y-0">
-                  <div className="flex items-center mt-2">
-                    <img 
-                      src="./images/logo.png" 
-                      alt="Resikel Logo" 
-                      className="h-12 w-auto mr-3"
-                    />
-                    <span className="text-sm mb-2">RESIKEL © 2024 AgriMadani. All Rights Reserved.</span>
-                  </div>
-                  <div className="flex items-center">
-                    <img 
-                      src="./images/ig2.png" 
-                      alt="Logo 1" 
-                      className="h-8 w-auto mx-2"
-                    />
-                    <img 
-                      src="./images/mail2.png" 
-                      alt="Logo 2" 
-                      className="h-8 w-auto mx-2"
-                    />
-                    <img 
-                      src="./images/telpon2.png" 
-                      alt="Logo 3" 
-                      className="h-8 w-auto ml-2"
-                    />
-                  </div>
-                </div>
-              </div>
-            </footer>
-    )
-}
+      <div className="mt-16">
+        <hr className="border-t border-gray-300 mb-2" />
+      <div className="flex flex-col items-center px-4 space-y-4">
+
+    <div className="md:hidden flex items-center mb-4 mt-6">
+      <img 
+        src="./images/ig2.png" 
+        alt="Instagram" 
+        className="h-8 w-auto mx-2"
+      />
+      <img 
+        src="./images/mail2.png" 
+        alt="Email" 
+        className="h-8 w-auto mx-2"
+      />
+      <img 
+        src="./images/telpon2.png" 
+        alt="Telepon" 
+        className="h-8 w-auto mx-2"
+      />
+    </div>
+
+    <div className="w-full flex justify-between items-center">
+  <div className="w-full flex flex-col md:flex-row items-center justify-center md:justify-start">
+    <div className="flex items-center">
+      <img 
+        src="./images/logo.png" 
+        alt="Resikel Logo" 
+        className="h-12 w-auto mr-3"
+      />
+      <span className="text-sm">RESIKEL © 2024 AgriMadani. All Rights Reserved.</span>
+    </div>
+  </div>
+
+      <div className="hidden md:flex items-center">
+        <img 
+          src="./images/ig2.png" 
+          alt="Instagram" 
+          className="h-8 w-auto mx-2"
+        />
+        <img 
+          src="./images/mail2.png" 
+          alt="Email" 
+          className="h-8 w-auto mx-2"
+        />
+        <img 
+          src="./images/telpon2.png" 
+          alt="Telepon" 
+          className="h-8 w-auto mx-2"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+</footer>
+  );
+};
 
 export default Footer;
