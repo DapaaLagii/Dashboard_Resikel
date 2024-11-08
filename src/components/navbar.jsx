@@ -17,7 +17,7 @@ function Navbar() {
             <nav className="font-medium flex items-center gap-12" navbar>
                     <NavLink 
                         className={({ isActive }) => 
-                            `nav-link text-lg ${isActive ? 'text-emerald-700' : 'text-gray-600'} hover:text-emerald-200`
+                            `nav-link text-lg ${isActive ? 'text-emerald-500' : 'text-gray-600'} hover:text-emerald-200`
                         } 
                         to="/"
                     >
@@ -25,7 +25,7 @@ function Navbar() {
                     </NavLink>
                     <NavLink 
                         className={({ isActive }) => 
-                            `nav-link text-lg ${isActive ? 'text-emerald-700' : 'text-gray-600'} hover:text-emerald-200`
+                            `nav-link text-lg ${isActive ? 'text-emerald-500' : 'text-gray-600'} hover:text-emerald-200`
                         } 
                         to="/Tentang"
                     >
@@ -33,7 +33,7 @@ function Navbar() {
                     </NavLink>
                     <NavLink 
                         className={({ isActive }) => 
-                            `nav-link text-lg ${isActive ? 'text-emerald-700' : 'text-gray-600'} hover:text-emerald-200`
+                            `nav-link text-lg ${isActive ? 'text-emerald-500' : 'text-gray-600'} hover:text-emerald-200`
                         } 
                         to="/Layanan"
                     >
@@ -41,7 +41,7 @@ function Navbar() {
                     </NavLink>
                     <NavLink 
                         className={({ isActive }) => 
-                            `nav-link text-lg ${isActive ? 'text-emerald-700' : 'text-gray-600'} hover:text-emerald-200`
+                            `nav-link text-lg ${isActive ? 'text-emerald-500' : 'text-gray-600'} hover:text-emerald-200`
                         } 
                         to="/Program"
                     >
