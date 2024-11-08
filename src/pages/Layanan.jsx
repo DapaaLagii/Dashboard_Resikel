@@ -6,7 +6,7 @@ const RewardSection = () => (
       <div className="inline-block bg-emerald-100 rounded-full px-6 py-2 text-emerald-800 font-medium mb-4">
         Reward
       </div>
-      <p className="text-lg">
+      <p className="text-lg text-justify">
         Menaikan minat masyarakat dalam mendaur ulang sampah dengan memberikan 
         <span className="text-emerald-700 font-medium"> Reward </span> 
         di setiap sampah yang di kumpulkan
@@ -29,7 +29,7 @@ const KomunitasSection = () => (
     <div className="inline-block bg-emerald-100 rounded-full px-6 py-2 text-emerald-800 font-medium mb-4">
       Komunitas
     </div>
-    <p className="text-lg">
+    <p className="text-lg text-justify">
       Bahkan hal yang membosankan jika di kerjakan beramai ramai akan menjadi menyenangkan.
       Karenanya komunitas hadir untuk menambah keseruan dalam menjaga keberlanjutan lingkungan
     </p>
@@ -43,7 +43,7 @@ const JemputSampahSection = () => (
       <div className="inline-block bg-emerald-100 rounded-full px-6 py-2 text-emerald-800 font-medium mb-4">
         Jemput Sampah
       </div>
-      <p className="text-lg">
+      <p className="text-lg text-justify">
         Kami tahu jika tidak semua orang punya waktu, oleh sebab itu kami memfasilitasi pengguna agar tetap
         nyaman dalam mendaur ulang sampah
       </p>
@@ -63,7 +63,9 @@ function Layanan () {
         <h1 className="text-4xl font-bold text-center mb-8">Layanan</h1>
         <p className="text-center text-lg mb-12">Manajemen Limbah Sampah di Kota Batam</p>
         <RewardSection />
+        <hr className="border-t-2 border-gray-200 my-8" />
         <KomunitasSection />
+        <hr className="border-t-2 border-gray-200 my-8" />
         <JemputSampahSection />
       </main>
     </div>

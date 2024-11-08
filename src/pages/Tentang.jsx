@@ -4,7 +4,7 @@ const HeroSection = () => {
     <div className="bg-gray-50 py-0.5 ">
       <div className="container mx-auto px-4 flex flex-col items-center">
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+          <h1 className="mt-12 text-4xl md:text-6xl font-bold mb-4">
             #Kelola Sampah,Dapat Reward,Lebih Bersih!
           </h1>
           <p className="text-lg mb-8">
@@ -28,11 +28,11 @@ const HeroSection = () => {
           </div>
           <div className="md:w-2/3">
             <h2 className="text-3xl font-bold text-emerald-700 mb-4">Misi Kami Adalah Menjembatani Masyarakat</h2>
-            <p className="text-gray-600 mb-4">
-              Dengan populasi <span className="text-emerald-600">1.196.396</span> jiwa, Kota Batam menghasilkan <span className="text-emerald-600">1.144</span> ton sampah per hari (<span className="text-emerald-600">0.7</span> kg per orang).
+            <p className="text-gray-600 mb-4 text-justify">
+              Dengan populasi <span className="text-blue-600">1.196.396</span> jiwa, Kota Batam menghasilkan <span className="text-red-600">1.144</span> ton sampah per hari (<span className="text-red-600">0.7</span> kg per orang). Keterbatasan sumber daya membuat pengelolaan sampah tidak efisien, sehingga sampah menumpuk dan memicu masalah lingkungan dan kesehatan. Solusi apa yang dapat melibatkan masyarakat secara aktif melalui teknologi digital untuk menangani masalah ini secara efektif dan berkelanjutan?
             </p>
-            <p className="text-gray-600">
-              Aplikasi <span className="font-bold">Resikel</span> hadir untuk menawarkan solusi pengelolaan sampah di Kota Batam dengan melibatkan masyarakat secara aktif dan memberi reward berdasarkan sampah yang diserahkan.
+            <p className="text-gray-600 text-justify">
+              Aplikasi <span className="font-bold text-emerald-700">Resikel</span> hadir untuk menawarkan solusi pengelolaan sampah di Kota Batam dengan melibatkan masyarakat secara aktif dan memberi reward berdasarkan sampah yang diserahkan.  Aplikasi ini mempermudah transaksi dengan pengepul sampah dan menyediakan panduan dan artikel  tentang jenis, penanganan dan pengelolaan sampah, sehingga mendukung pengelolaan sampah yang efisien dan edukasi lingkungan untuk gaya hidup yang berkelanjutan.
             </p>
           </div>
         </div>
@@ -46,8 +46,8 @@ const HeroSection = () => {
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
           <div className="md:w-2/3">
             <h2 className="text-3xl font-bold text-emerald-700 mb-4">Pelita Hijau Nusantara</h2>
-            <p className="text-gray-600">
-              Yayasan Pelita Hijau Nusantara atau yang disingkat PELITA didirikan sebagai badan hukum yang bergerak dalam bidang sosial, kemasyarakatan dan keagamaan yang berwenang dan bertanggung jawab mengelola, membina, mengembangkan dan mengkoordinasikan setiap dan seluruh pelaksanaan kegiatan lingkungan diwilayah hukum Negara Kesatuan Republik Indonesia.
+            <p className="text-gray-600 mb-4 text-justify">
+              Yayasan Pelita Hijau Nusantara atau yang disingkat <span className="text-emerald-700">PEJANTARA</span> didirikan sebagai badan hukum yang bergerak dalam bidang sosial, kemasyarakatan dan keagamaan yang berwenang dan bertanggung jawab mengelola, membina, mengembangkan dan mengkoordinasikan setiap dan seluruh pelaksanaan kegiatan lingkungan diwilayah hukum Negara Kesatuan Republik Indonesia.
             </p>
           </div>
           <div className="md:w-1/4">
@@ -67,8 +67,8 @@ const HeroSection = () => {
           </div>
           <div className="md:w-2/3">
             <h2 className="text-3xl font-bold text-emerald-700 mb-4">Apa Itu AgriMadani?</h2>
-            <p className="text-gray-600">
-              AgriMadani Adalah sebuah Grup yang terbentuk dengan sebuah ketulusan dan kesadaran di masyarakat kian aktif, memanfaatkan forum me pra renewable lingkungan yang nyaman di lingkungan ini juga membantu konsentrasi yang solid sehingga bersama-sama mewujudkan dalam mewujudkan lingkungan yang lebih baik
+            <p className="text-gray-600 mb-4 text-justify">
+              <span className="text-emerald-700">Agrimadani</span> Adalah sebuah Grup yang terbentuk dengan sebuah ketulusan dan kesadaran di masyarakat kian aktif, memanfaatkan forum me pra renewable lingkungan yang nyaman di lingkungan ini juga membantu konsentrasi yang solid sehingga bersama-sama mewujudkan dalam mewujudkan lingkungan yang lebih baik
             </p>
           </div>
         </div>
