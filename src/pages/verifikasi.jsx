@@ -1,11 +1,13 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/sidebar';
 import { useTable, usePagination } from 'react-table';
 
-
 function Verifikasi() {
     const [isCollapsed, setIsCollapsed] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
     const navigate = useNavigate();
     
 
@@ -21,6 +23,37 @@ function Verifikasi() {
     const createUniqueKey = (prefix, item, index) => {
         return `${prefix}-${item.idTransaksi || item.id || index}`;
     };
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const handleLogoutClick = () => {
+        setIsDropdownOpen(false);
+        setShowLogoutModal(true);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/admin');
+    };
+
+    const handleCancelLogout = () => {
+        setShowLogoutModal(false);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const data = useMemo(() => [
         { 
@@ -62,46 +95,34 @@ function Verifikasi() {
         }))
     ], []);
 
-    const columns = useMemo(
+    const columns = React.useMemo(
         () => [
-            { 
-                Header: 'ID Transaksi', 
-                accessor: 'idTransaksi' 
+            {
+                Header: 'ID Transaksi',
+                accessor: 'idTransaksi',
             },
-            { 
-                Header: 'Nama', 
-                accessor: 'nama' 
+            {
+                Header: 'Nama',
+                accessor: 'nama',
             },
-            { 
-                Header: 'Tanggal', 
-                accessor: 'tanggal' 
+            {
+                Header: 'Tanggal',
+                accessor: 'tanggal',
             },
-            { 
-                Header: 'Status', 
+            {
+                Header: 'Status',
                 accessor: 'status',
-                Cell: ({ value }) => {
-                    const statusColors = {
-                        'Sukses': 'bg-green-100 text-green-800',
-                        'Pending': 'bg-yellow-100 text-yellow-800',
-                        'Gagal': 'bg-red-100 text-red-800'
-                    };
-                    return (
-                        <span className={`px-2 py-1 rounded-full text-xs ${statusColors[value] || 'bg-gray-100'}`}>
-                            {value}
-                        </span>
-                    );
-                }
+                Cell: ({ value }) => (
+                    <span className={`
+                        px-2 py-1 rounded-full text-xs 
+                        ${value === 'Sukses' ? 'bg-green-100 text-green-800' : 
+                          value === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
+                          'bg-red-100 text-red-800'}
+                    `}>
+                        {value}
+                    </span>
+                )
             },
-            { 
-                Header: 'Jenis Sampah', 
-                accessor: 'jenisSampah',
-                Cell: ({ value }) => value.length > 0 ? value.join(', ') : 'Tidak ada' 
-            },
-            { 
-                Header: 'Quantity', 
-                accessor: 'quantity',
-                Cell: ({ value }) => value.length > 0 ? value.join(', ') : 'Tidak ada'
-            }
         ],
         []
     );
@@ -144,58 +165,109 @@ function Verifikasi() {
         `}>
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold text-emerald-500">Verifikasi</h1>
-                <div className="ml-auto">
-                    <button className="text-emerald-600 hover:bg-emerald-50 p-2 rounded-full transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                <div className="relative" ref={dropdownRef}>
+                    {/* Button Profile */}
+                    <button 
+                        onClick={toggleDropdown}
+                        className="text-emerald-600 hover:bg-emerald-50 p-2 rounded-full transition-colors"
+                    >
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            className="h-6 w-6" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke="currentColor"
+                        >
+                            <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth={2} 
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" 
+                            />
                         </svg>
                     </button>
+
+                    {isDropdownOpen && (
+                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl z-50 border">
+                            <div className="py-2">
+                                <button
+                                    onClick={handleLogoutClick}
+                                    className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50"
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
+
+                {/* Modal Konfirmasi Logout */}
+                {showLogoutModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
+                        <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
+                            <h2 className="text-xl mb-4 text-center">Apakah Anda yakin ingin logout?</h2>
+                            <div className="flex justify-center space-x-4">
+                                <button 
+                                    onClick={handleLogout}
+                                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+                                >
+                                    Logout
+                                </button>
+                                <button 
+                                    onClick={handleCancelLogout}
+                                    className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition"
+                                >
+                                    Batal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
             
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
                     <div className="overflow-x-auto">
-                        <table {...cleanProps(getTableProps())} className="min-w-full border-collapse">
-                            <thead className="bg-gray-100">
-                                {headerGroups.map((headerGroup, headerGroupIndex) => (
-                                    <tr 
-                                        key={createUniqueKey('header-group', headerGroup, headerGroupIndex)}
-                                        {...cleanProps(headerGroup.getHeaderGroupProps())}
-                                    >
-                                        {headerGroup.headers.map((column, columnIndex) => {
-                                            const columnProps = cleanProps(column.getHeaderProps());
-                                            return (
-                                                <th 
-                                                    key={createUniqueKey(`header-${headerGroupIndex}`, column, columnIndex)}
-                                                    {...columnProps}
-                                                    className="border px-4 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                                                >
-                                                    {column.render('Header')}
-                                                </th>
-                                            );
-                                        })}
-                                    </tr>
-                                ))}
-                            </thead>
-                            <tbody 
-                                key="table-body"
-                                {...cleanProps(getTableBodyProps())} 
-                                className="bg-white divide-y divide-gray-200"
-                            >
-                                {page.map((row, rowIndex) => {
-                                    prepareRow(row);
-                                    const rowProps = cleanProps(row.getRowProps());
-
-                                    return (
+                    <table {...cleanProps(getTableProps())} className="min-w-full border-collapse">
+                                <thead className="bg-gray-100">
+                                    {headerGroups.map((headerGroup, headerGroupIndex) => (
                                         <tr 
-                                            key={createUniqueKey('row', row.original, rowIndex)}
-                                            {...rowProps}
-                                            className="hover:bg-gray-50 transition-colors cursor-pointer"
-                                            onClick={() => navigate(`/detail/${row.original.idTransaksi}`, { 
-                                                state: { 
-                                                    transaksiDetail: row.original 
-                                                } 
+                                            key={createUniqueKey('header-group', headerGroup, headerGroupIndex)}
+                                            {...cleanProps(headerGroup.getHeaderGroupProps())}
+                                        >
+                                            {headerGroup.headers.map((column, columnIndex) => {
+                                                const columnProps = cleanProps(column.getHeaderProps());
+                                                return (
+                                                    <th 
+                                                        key={createUniqueKey(`header-${headerGroupIndex}`, column, columnIndex)}
+                                                        {...columnProps}
+                                                        className="border px-4 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                                                    >
+                                                        {column.render('Header')}
+                                                    </th>
+                                                );
                                             })}
+                                        </tr>
+                                    ))}
+                                </thead>
+                                <tbody 
+                                    key="table-body"
+                                    {...cleanProps(getTableBodyProps())} 
+                                    className="bg-white divide-y divide-gray-200"
+                                >
+                                    {page.map((row, rowIndex) => {
+                                        prepareRow(row);
+                                        const rowProps = cleanProps(row.getRowProps());
+
+                                        return (
+                                            <tr 
+                                                key={createUniqueKey('row', row.original, rowIndex)}
+                                                {...rowProps}
+                                                className="hover:bg-gray-50 transition-colors cursor-pointer"
+                                                onClick={() => navigate(`/detail/${row.original.idTransaksi}`, { 
+                                                    state: { 
+                                                        transaksiDetail: row.original 
+                                                    } 
+                                                })}
                                             >
                                                 {row.cells.map((cell, cellIndex) => {
                                                     const cellProps = cleanProps(cell.getCellProps());
