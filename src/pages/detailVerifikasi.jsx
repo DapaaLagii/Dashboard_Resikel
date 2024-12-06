@@ -136,7 +136,7 @@ function DetailVerifikasi() {
           </div>
         )}
 
-        {/* Verifikasi Modal */}
+        
         {showVerifikasiModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
             <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
@@ -161,7 +161,7 @@ function DetailVerifikasi() {
           </div>
         )}
 
-        {/* Tolak Modal */}
+        
         {showTolakModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
             <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">

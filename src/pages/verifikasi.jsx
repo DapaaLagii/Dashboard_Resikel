@@ -166,7 +166,7 @@ function Verifikasi() {
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold text-emerald-500">Verifikasi</h1>
                 <div className="relative" ref={dropdownRef}>
-                    {/* Button Profile */}
+                    
                     <button 
                         onClick={toggleDropdown}
                         className="text-emerald-600 hover:bg-emerald-50 p-2 rounded-full transition-colors"
@@ -201,7 +201,7 @@ function Verifikasi() {
                     )}
                 </div>
 
-                {/* Modal Konfirmasi Logout */}
+                
                 {showLogoutModal && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
                         <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
@@ -289,7 +289,7 @@ function Verifikasi() {
                         </div>
                     </div>
 
-                {/* Pagination Controls */}
+                
                 <div className="px-6 py-4 bg-gray-50 flex justify-between items-center">
                     <div className="flex space-x-2">
                         <button 
