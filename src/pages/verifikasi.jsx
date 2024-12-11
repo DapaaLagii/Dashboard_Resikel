@@ -14,11 +14,11 @@ function Verifikasi() {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  // Firebase hooks to fetch transaction data
+
   const transaksiRef = collection(firestore, 'transaksi');
   const [transactionSnapshot] = useCollection(transaksiRef);
 
-  // Map transaction snapshot to an array of data
+
   const transactionData = useMemo(() => {
     return (
       transactionSnapshot?.docs.map((doc) => ({
@@ -28,7 +28,7 @@ function Verifikasi() {
     );
   }, [transactionSnapshot]);
 
-  // Optimized fetching of user data
+  
   useEffect(() => {
     const fetchUserData = async () => {
       const uniqueUserIds = [...new Set(transactionData.map((t) => t.idUser).filter(Boolean))];
@@ -52,7 +52,7 @@ function Verifikasi() {
     fetchUserData();
   }, [transactionData]);
 
-  // Prepare table data
+  
   const data = useMemo(() => {
     return transactionData.map((transaction) => ({
       id: transaction.id,
@@ -65,7 +65,7 @@ function Verifikasi() {
     }));
   }, [transactionData, userData]);
 
-  // Define table columns
+  
   const columns = useMemo(
     () => [
       {
@@ -86,11 +86,13 @@ function Verifikasi() {
         Cell: ({ value }) => (
           <span
             className={`px-2 py-1 rounded-full text-xs ${
-              value === 'Sukses'
-                ? 'bg-green-100 text-green-800'
-                : value === 'Pending'
-                ? 'bg-yellow-100 text-yellow-800'
-                : 'bg-red-100 text-red-800'
+              value === 'sukses' || value === 'berhasil' 
+                ? 'bg-green-100 text-green-800' 
+                : value === 'pending'
+                ? 'bg-yellow-100 text-yellow-800' 
+                : value === 'gagal'
+                ? 'bg-red-100 text-red-800' 
+                : 'bg-gray-100 text-gray-800' 
             }`}
           >
             {value}
@@ -101,7 +103,7 @@ function Verifikasi() {
     []
   );
 
-  // React Table hooks
+  
   const {
     getTableProps,
     getTableBodyProps,
@@ -124,7 +126,7 @@ function Verifikasi() {
     usePagination
   );
 
-  // Logout logic
+  
   const handleLogoutClick = () => {
     setIsDropdownOpen(false);
     setShowLogoutModal(true);
@@ -139,7 +141,7 @@ function Verifikasi() {
     setShowLogoutModal(false);
   };
 
-  // UI and rendering
+  
   return (
     <div
       className="flex"
@@ -153,7 +155,7 @@ function Verifikasi() {
       <div
         className={`p-6 flex-1 transition-all duration-300 ${isCollapsed ? 'ml-20' : 'ml-64'}`}
       >
-        {/* Header */}
+        
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-emerald-500">Verifikasi</h1>
           <div className="relative" ref={dropdownRef}>
@@ -189,7 +191,7 @@ function Verifikasi() {
           </div>
         </div>
 
-        {/* Logout Modal */}
+        
         {showLogoutModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
             <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
@@ -214,7 +216,7 @@ function Verifikasi() {
           </div>
         )}
 
-        {/* Table */}
+       
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
         <table {...getTableProps()} className="min-w-full border-collapse">
           <thead className="bg-gray-100">
@@ -257,8 +259,8 @@ function Verifikasi() {
                     const { key: cellKey, ...cellProps } = cell.getCellProps(); // Pisahkan key
                     return (
                       <td
-                        key={cellKey} // Tetapkan key langsung
-                        {...cellProps} // Sebarkan properti lainnya
+                        key={cellKey} 
+                        {...cellProps} 
                         className="px-4 py-2 text-sm"
                       >
                         {cell.render('Cell')}
@@ -272,7 +274,7 @@ function Verifikasi() {
         </table>
         </div>
 
-        {/* Pagination */}
+        
         <div className="px-6 py-4 bg-gray-50 flex justify-between items-center">
           <div className="flex space-x-2">
             <button
