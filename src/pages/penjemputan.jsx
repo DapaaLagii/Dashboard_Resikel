@@ -5,7 +5,9 @@ import { useTable, usePagination } from 'react-table';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { parse, format } from 'date-fns';
-import penjemputanData from '../penjemputan.json';
+import { firestore } from '../firebase';
+import { collection, query, getDocs, doc, getDoc } from 'firebase/firestore';
+
 
 function Penjemputan() {
     const [isCollapsed, setIsCollapsed] = useState(false);
@@ -14,17 +16,73 @@ function Penjemputan() {
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
     const [startDate, setStartDate] = useState(null);
+    const [penjemputanData, setPenjemputanData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const data = useMemo(() => penjemputanData.data, []);
+    useEffect(() => {
+        const fetchPenjemputanData = async () => {
+            try {
+                // Ambil data dari daftarPenjemputan
+                const daftarPenjemputanRef = collection(firestore, 'daftarPenjemputan');
+                const daftarPenjemputanSnapshot = await getDocs(daftarPenjemputanRef);
 
-    const filteredData = useMemo(() => {
-        if (!startDate) return data;
-        return data.filter(item => {
-            const itemDate = parse(item.tanggal, 'dd-MM-yyyy', new Date());
-            const selectedDate = startDate;
-            return format(itemDate, 'dd-MM-yyyy') === format(selectedDate, 'dd-MM-yyyy');
-        });
-    }, [data, startDate]);
+                // Siapkan array untuk menyimpan data lengkap
+                const completeData = [];
+
+                // Loop through setiap dokumen di daftarPenjemputan
+                for (const docSnap of daftarPenjemputanSnapshot.docs) {
+                    const penjemputanData = docSnap.data();
+                    
+                    // Ambil data user
+                    const userRef = doc(firestore, 'users', penjemputanData.idUser);
+                    const userSnap = await getDoc(userRef);
+                    const userData = userSnap.exists() ? userSnap.data() : {};
+
+                    // Ambil data jadwal penjemputan
+                    const jadwalRef = doc(firestore, 'jadwalPenjemputan', penjemputanData.idPenjemputan);
+                    const jadwalSnap = await getDoc(jadwalRef);
+                    const jadwalData = jadwalSnap.exists() ? jadwalSnap.data() : {};
+
+                    // Format tanggal
+                    const tanggalFormatted = jadwalData.tanggal 
+                        ? jadwalData.tanggal.toDate().toLocaleDateString('id-ID', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                        }) 
+                        : 'Tanggal tidak tersedia';
+
+                    // Gabungkan semua data
+                    completeData.push({
+                        id: docSnap.id,
+                        nama: userData.name || 'Nama tidak tersedia',
+                        alamat: penjemputanData.alamat || 'Alamat tidak tersedia',
+                        tanggal: tanggalFormatted,
+                        status: penjemputanData.status || 'Status tidak tersedia'
+                    });
+                }
+
+                setPenjemputanData(completeData);
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Error fetching penjemputan data:", error);
+                setIsLoading(false);
+            }
+        };
+
+        fetchPenjemputanData();
+    }, []);
+// Modifikasi data untuk react-table
+const data = useMemo(() => penjemputanData, [penjemputanData]);
+
+const filteredData = useMemo(() => {
+    if (!startDate) return data;
+    return data.filter(item => {
+        const itemDate = parse(item.tanggal, 'dd/MM/yyyy', new Date());
+        const selectedDate = startDate;
+        return format(itemDate, 'dd/MM/yyyy') === format(selectedDate, 'dd/MM/yyyy');
+    });
+}, [data, startDate]);
 
     const columns = useMemo(
         () => [
@@ -92,6 +150,15 @@ function Penjemputan() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    // Tambahkan loading state di render
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-emerald-500"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="flex" style={{ backgroundImage: 'url(./images/bg.jpg)', backgroundSize: 'cover', minHeight: '100vh' }}>
