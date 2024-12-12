@@ -102,33 +102,39 @@ function DetailVerifikasi() {
 
   const handleAction = async (action) => {
     try {
-      if (!transaksiDetail) return;
+        if (!transaksiDetail) return;
 
-      const q = query(
-        collection(firestore, "detailTransaksi"),
-        where("idTransaksi", "==", idTransaksi)
-      );
+        // Update status di detailTransaksi
+        const detailTransaksiQuery = query(
+            collection(firestore, "detailTransaksi"),
+            where("idTransaksi", "==", idTransaksi)
+        );
 
-      const querySnapshot = await getDocs(q);
+        const detailTransaksiSnapshot = await getDocs(detailTransaksiQuery);
 
-      if (!querySnapshot.empty) {
-        const docRef = querySnapshot.docs[0].ref;
-        await updateDoc(docRef, {
-          status: action === "Verifikasi" ? "Sukses" : "Ditolak",
+        if (!detailTransaksiSnapshot.empty) {
+            const detailTransaksiDocRef = detailTransaksiSnapshot.docs[0].ref;
+            await updateDoc(detailTransaksiDocRef, {
+                status: action === "Verifikasi" ? "Sukses" : "Ditolak",
+            });
+        }
+
+        // Update status di koleksi transaksi
+        const transaksiDocRef = doc(firestore, "transaksi", idTransaksi);
+        await updateDoc(transaksiDocRef, {
+            status: action === "Verifikasi" ? "sukses" : "gagal",
         });
+
         navigate("/verifikasi");
-      } else {
-        console.error("❌ Transaksi tidak ditemukan untuk diperbarui.");
-      }
     } catch (error) {
-      console.error("Error updating transaction status:", error);
-      alert(
-        "Terjadi kesalahan saat memperbarui status transaksi. Silakan coba lagi."
-      );
+        console.error("Error updating transaction status:", error);
+        alert(
+            "Terjadi kesalahan saat memperbarui status transaksi. Silakan coba lagi."
+        );
     } finally {
-      setModalAction(null);
+        setModalAction(null);
     }
-  };
+};
 
   const openModal = (action) => setModalAction(action);
 
@@ -252,22 +258,22 @@ function DetailVerifikasi() {
             )}
           </div>
 
-          {status === "Pending" && (
-            <div className="p-6 flex justify-center space-x-4">
-              <button
-                onClick={() => openModal("Verifikasi")}
-                className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
-              >
-                Verifikasi
-              </button>
-              <button
-                onClick={() => openModal("Tolak")}
-                className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
-              >
-                Tolak
-              </button>
-            </div>
-          )}
+          {(transaksiInfo?.status?.toLowerCase() === "pending") && (
+    <div className="p-6 flex justify-center space-x-4">
+        <button
+            onClick={() => openModal("Verifikasi")}
+            className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+        >
+            Verifikasi
+        </button>
+        <button
+            onClick={() => openModal("Tolak")}
+            className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+        >
+            Tolak
+        </button>
+    </div>
+)}
         </div>
 
         {modalAction && (
