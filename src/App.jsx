@@ -19,10 +19,10 @@ function App() {
     <>
     <Router>    
         <Routes>
-          <Route path="/" element={<><Header /><Navbar /><Beranda /><Footer /></>} />
-          <Route path="/tentang" element={<><Header /><Navbar /><Tentang /><Footer /></>} />
+          <Route path="/" element={<><Header /><Navbar /><Tentang /><Footer /></>} />
           <Route path="/layanan" element={<><Header /><Navbar /><Layanan /><Footer /></>} />
           <Route path="/program" element={<><Header /><Navbar /><Program /><Footer /></>} />
+          <Route path="/download" element={<><Header /><Navbar /><Beranda /><Footer /></>} />
           <Route path="/admin" element={<><HeaderAdmin /><LoginAdmin /></>} />
           <Route path="/dashboard" element={<><Dashboard/></>} />
           <Route path="/penjemputan" element={<><Penjemputan /></>} />

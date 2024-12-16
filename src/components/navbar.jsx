@@ -15,7 +15,7 @@ function Navbar() {
                     <img 
                         src="./images/logo.png" 
                         alt="Logo" 
-                        className="h-12 w-auto"
+                        className="h-16 w-auto"
                     />
                 </div>
           
@@ -25,14 +25,6 @@ function Navbar() {
                             `nav-link text-lg ${isActive ? 'text-emerald-500' : 'text-gray-600'} hover:text-emerald-200 transition-colors duration-300`
                         } 
                         to="/"
-                    >
-                        Beranda
-                    </NavLink>
-                    <NavLink 
-                        className={({ isActive }) => 
-                            `nav-link text-lg ${isActive ? 'text-emerald-500' : 'text-gray-600'} hover:text-emerald-200 transition-colors duration-300`
-                        } 
-                        to="/Tentang"
                     >
                         Tentang Kami
                     </NavLink>
@@ -51,6 +43,14 @@ function Navbar() {
                         to="/Program"
                     >
                         Program
+                    </NavLink>
+                    <NavLink 
+                        className={({ isActive }) => 
+                            `nav-link text-lg ${isActive ? 'text-emerald-500' : 'text-gray-600'} hover:text-emerald-200 transition-colors duration-300`
+                        } 
+                        to="/download"
+                    >
+                        Download
                     </NavLink>
                 </div>
 
