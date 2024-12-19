@@ -22,6 +22,26 @@ function DetailVerifikasi() {
   const { idTransaksi } = useParams();
   const navigate = useNavigate();
 
+  // Fungsi untuk memformat nomor telepon untuk WhatsApp
+  const formatWhatsAppNumber = (phoneNumber) => {
+    // Hapus semua karakter non-digit
+    let cleaned = phoneNumber.replace(/\D/g, "");
+    // Pastikan dimulai dengan kode negara Indonesia
+    if (cleaned.startsWith("0")) {
+      cleaned = "62" + cleaned.slice(1);
+    } else if (!cleaned.startsWith("62")) {
+      cleaned = "62" + cleaned;
+    }
+    return cleaned;
+  };
+
+  // Fungsi untuk membuat link WhatsApp
+  const getWhatsAppLink = (phoneNumber) => {
+    if (phoneNumber === "Tidak tersedia") return "#";
+    const formattedNumber = formatWhatsAppNumber(phoneNumber);
+    return `https://wa.me/${formattedNumber}`;
+  };
+
   useEffect(() => {
     const fetchDetailTransaksi = async () => {
       try {
@@ -66,14 +86,17 @@ function DetailVerifikasi() {
           // Ambil idUser dari dokumen transaksi
           const { idUser, status } = data;
 
-          // Ambil nama user dari koleksi users menggunakan idUser
+          // Ambil nama dan nomor telepon user dari koleksi users menggunakan idUser
           let name = "Tidak tersedia";
+          let phoneNumber = "Tidak tersedia";
           if (idUser) {
             const userRef = doc(firestore, "users", idUser);
             const userSnap = await getDoc(userRef);
 
             if (userSnap.exists()) {
-              name = userSnap.data().name || "Tidak tersedia";
+              const userData = userSnap.data();
+              name = userData.name || "Tidak tersedia";
+              phoneNumber = userData.phoneNumber || "Tidak tersedia";
             } else {
               console.error("❌ User tidak ditemukan untuk idUser:", idUser);
             }
@@ -82,6 +105,7 @@ function DetailVerifikasi() {
           // Simpan data ke state
           setTransaksiInfo({
             name,
+            phoneNumber,
             status,
             tanggal: formattedTanggal,
           });
@@ -102,39 +126,39 @@ function DetailVerifikasi() {
 
   const handleAction = async (action) => {
     try {
-        if (!transaksiDetail) return;
+      if (!transaksiDetail) return;
 
-        // Update status di detailTransaksi
-        const detailTransaksiQuery = query(
-            collection(firestore, "detailTransaksi"),
-            where("idTransaksi", "==", idTransaksi)
-        );
+      // Update status di detailTransaksi
+      const detailTransaksiQuery = query(
+        collection(firestore, "detailTransaksi"),
+        where("idTransaksi", "==", idTransaksi)
+      );
 
-        const detailTransaksiSnapshot = await getDocs(detailTransaksiQuery);
+      const detailTransaksiSnapshot = await getDocs(detailTransaksiQuery);
 
-        if (!detailTransaksiSnapshot.empty) {
-            const detailTransaksiDocRef = detailTransaksiSnapshot.docs[0].ref;
-            await updateDoc(detailTransaksiDocRef, {
-                status: action === "Verifikasi" ? "Sukses" : "Ditolak",
-            });
-        }
-
-        // Update status di koleksi transaksi
-        const transaksiDocRef = doc(firestore, "transaksi", idTransaksi);
-        await updateDoc(transaksiDocRef, {
-            status: action === "Verifikasi" ? "sukses" : "gagal",
+      if (!detailTransaksiSnapshot.empty) {
+        const detailTransaksiDocRef = detailTransaksiSnapshot.docs[0].ref;
+        await updateDoc(detailTransaksiDocRef, {
+          status: action === "Verifikasi" ? "Sukses" : "Ditolak",
         });
+      }
 
-        navigate("/verifikasi");
+      // Update status di koleksi transaksi
+      const transaksiDocRef = doc(firestore, "transaksi", idTransaksi);
+      await updateDoc(transaksiDocRef, {
+        status: action === "Verifikasi" ? "sukses" : "gagal",
+      });
+
+      navigate("/verifikasi");
     } catch (error) {
-        console.error("Error updating transaction status:", error);
-        alert(
-            "Terjadi kesalahan saat memperbarui status transaksi. Silakan coba lagi."
-        );
+      console.error("Error updating transaction status:", error);
+      alert(
+        "Terjadi kesalahan saat memperbarui status transaksi. Silakan coba lagi."
+      );
     } finally {
-        setModalAction(null);
+      setModalAction(null);
     }
-};
+  };
 
   const openModal = (action) => setModalAction(action);
 
@@ -157,7 +181,7 @@ function DetailVerifikasi() {
     status,
   } = transaksiDetail;
 
-  const { name = "Tidak tersedia", tanggal = "Tidak tersedia" } =
+  const { name = "Tidak tersedia", phoneNumber = "Tidak tersedia", tanggal = "Tidak tersedia" } =
     transaksiInfo || {};
 
   const jenisSampahArray = jenisSampah ? jenisSampah.split(",") : [];
@@ -198,25 +222,42 @@ function DetailVerifikasi() {
                 <p className="font-medium">{name}</p>
               </div>
               <div>
+                <p className="text-sm text-gray-600">Nomor Telepon</p>
+                <p className="font-medium">
+                  {phoneNumber !== "Tidak tersedia" ? (
+                    <a
+                      href={getWhatsAppLink(phoneNumber)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-600 hover:text-emerald-800 hover:underline"
+                    >
+                      💬 {phoneNumber}
+                    </a>
+                  ) : (
+                    phoneNumber
+                  )}
+                </p>
+              </div>
+              <div>
                 <p className="text-sm text-gray-600">Tanggal</p>
                 <p className="font-medium">{tanggal}</p>
               </div>
               <div>
-  <p className="text-sm text-gray-600">Status</p>
-  <p className="font-medium">
-    <span
-      className={`px-2 py-1 rounded-full text-xs ${
-        transaksiInfo?.status?.toLowerCase() === "sukses"
-          ? "bg-green-100 text-green-800"
-          : transaksiInfo?.status?.toLowerCase() === "pending"
-          ? "bg-yellow-100 text-yellow-800"
-          : "bg-red-100 text-red-800"
-      }`}
-    >
-      {transaksiInfo?.status || "Tidak tersedia"}
-    </span>
-  </p>
-</div>
+                <p className="text-sm text-gray-600">Status</p>
+                <p className="font-medium">
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs ${
+                      transaksiInfo?.status?.toLowerCase() === "sukses"
+                        ? "bg-green-100 text-green-800"
+                        : transaksiInfo?.status?.toLowerCase() === "pending"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {transaksiInfo?.status || "Tidak tersedia"}
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
 
@@ -258,30 +299,29 @@ function DetailVerifikasi() {
             )}
           </div>
 
-          {(transaksiInfo?.status?.toLowerCase() === "pending") && (
-    <div className="p-6 flex justify-center space-x-4">
-        <button
-            onClick={() => openModal("Verifikasi")}
-            className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
-        >
-            Verifikasi
-        </button>
-        <button
-            onClick={() => openModal("Tolak")}
-            className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
-        >
-            Tolak
-        </button>
-    </div>
-)}
+          {transaksiInfo?.status?.toLowerCase() === "pending" && (
+            <div className="p-6 flex justify-center space-x-4">
+              <button
+                onClick={() => openModal("Verifikasi")}
+                className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+              >
+                Verifikasi
+              </button>
+              <button
+                onClick={() => openModal("Tolak")}
+                className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+              >
+                Tolak
+              </button>
+            </div>
+          )}
         </div>
 
         {modalAction && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
             <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
               <h2 className="text-xl mb-4 text-center">
-                Apakah Anda yakin ingin {modalAction.toLowerCase()} transaksi
-                ini?
+                Apakah Anda yakin ingin {modalAction.toLowerCase()} transaksi ini?
               </h2>
               <div className="flex justify-center space-x-4">
                 <button
