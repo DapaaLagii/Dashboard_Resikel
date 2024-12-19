@@ -17,7 +17,7 @@ const Footer = () => {
           <ul className="mt-2 space-y-1">
             <li>
               <Link 
-                to="/tentang#resikel" 
+                to="/#resikel" 
                 className="hover:underline"
                 onClick={() => scrollToSection('resikel')}
               >
@@ -26,7 +26,7 @@ const Footer = () => {
             </li>
             <li>
               <Link 
-                to="/tentang#pejantara" 
+                to="/#pejantara" 
                 className="hover:underline"
                 onClick={() => scrollToSection('pejantara')}
               >
@@ -35,7 +35,7 @@ const Footer = () => {
             </li>
             <li>
               <Link 
-                to="/tentang#agrimadani" 
+                to="/#agrimadani" 
                 className="hover:underline"
                 onClick={() => scrollToSection('agrimadani')}
               >
