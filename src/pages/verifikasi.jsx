@@ -14,21 +14,24 @@ function Verifikasi() {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-
   const transaksiRef = collection(firestore, 'transaksi');
   const [transactionSnapshot] = useCollection(transaksiRef);
 
-
+  // Mengubah data transaksi dan mengurutkannya berdasarkan tanggal
   const transactionData = useMemo(() => {
-    return (
-      transactionSnapshot?.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) || []
-    );
+    const transactions = transactionSnapshot?.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) || [];
+
+    // Mengurutkan transaksi berdasarkan tanggal (terbaru ke terlama)
+    return transactions.sort((a, b) => {
+      const dateA = a.tanggal?.toDate() || new Date(0);
+      const dateB = b.tanggal?.toDate() || new Date(0);
+      return dateB - dateA;
+    });
   }, [transactionSnapshot]);
 
-  
   useEffect(() => {
     const fetchUserData = async () => {
       const uniqueUserIds = [...new Set(transactionData.map((t) => t.idUser).filter(Boolean))];
@@ -45,27 +48,29 @@ function Verifikasi() {
 
         setUserData(users);
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error('Error mengambil data pengguna:', error);
       }
     };
 
     fetchUserData();
   }, [transactionData]);
 
-  
   const data = useMemo(() => {
     return transactionData.map((transaction) => ({
       id: transaction.id,
       name: userData[transaction.idUser] || 'Nama tidak tersedia',
       tanggal: transaction.tanggal?.toDate
-        ? transaction.tanggal.toDate().toLocaleDateString('id-ID')
+        ? transaction.tanggal.toDate().toLocaleDateString('id-ID', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+          })
         : 'Tanggal tidak tersedia',
       status: transaction.status,
       idTransaksi: transaction.id,
     }));
   }, [transactionData, userData]);
 
-  
   const columns = useMemo(
     () => [
       {
@@ -103,7 +108,6 @@ function Verifikasi() {
     []
   );
 
-  
   const {
     getTableProps,
     getTableBodyProps,
@@ -126,7 +130,6 @@ function Verifikasi() {
     usePagination
   );
 
-  
   const handleLogoutClick = () => {
     setIsDropdownOpen(false);
     setShowLogoutModal(true);
@@ -141,7 +144,6 @@ function Verifikasi() {
     setShowLogoutModal(false);
   };
 
-  
   return (
     <div
       className="flex"
@@ -155,7 +157,6 @@ function Verifikasi() {
       <div
         className={`p-6 flex-1 transition-all duration-300 ${isCollapsed ? 'ml-20' : 'ml-64'}`}
       >
-        
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-emerald-500">Verifikasi</h1>
           <div className="relative" ref={dropdownRef}>
@@ -184,26 +185,25 @@ function Verifikasi() {
                   onClick={handleLogoutClick}
                   className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50"
                 >
-                  Logout
+                  Keluar
                 </button>
               </div>
             )}
           </div>
         </div>
 
-        
         {showLogoutModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
             <div className="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full">
               <h2 className="text-xl mb-4 text-center">
-                Apakah Anda yakin ingin logout?
+                Apakah Anda yakin ingin keluar?
               </h2>
               <div className="flex justify-center space-x-4">
                 <button
                   onClick={handleLogout}
                   className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
                 >
-                  Logout
+                  Keluar
                 </button>
                 <button
                   onClick={handleCancelLogout}
@@ -216,65 +216,63 @@ function Verifikasi() {
           </div>
         )}
 
-       
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <table {...getTableProps()} className="min-w-full border-collapse">
-          <thead className="bg-gray-100">
-            {headerGroups.map((headerGroup) => {
-              const { key: headerKey, ...headerGroupProps } = headerGroup.getHeaderGroupProps(); // Pisahkan key
-              return (
-                <tr key={headerKey} {...headerGroupProps}>
-                  {headerGroup.headers.map((column) => {
-                    const { key: columnKey, ...columnProps } = column.getHeaderProps(); // Pisahkan key
-                    return (
-                      <th
-                        key={columnKey} // Tetapkan key langsung
-                        {...columnProps}
-                        className="border px-4 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        {column.render('Header')}
-                      </th>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </thead>
-          <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
-            {page.map((row) => {
-              prepareRow(row);
-              const { key: rowKey, ...rowProps } = row.getRowProps(); // Pisahkan key
-              return (
-                <tr
-                  key={rowKey} 
-                  {...rowProps}
-                  className="hover:bg-gray-50 transition-colors cursor-pointer"
-                  onClick={() =>
-                    navigate(`/detail/${row.original.idTransaksi}`, {
-                      state: { transaksiDetail: row.original },
-                    })
-                  }
-                >
-                  {row.cells.map((cell) => {
-                    const { key: cellKey, ...cellProps } = cell.getCellProps(); // Pisahkan key
-                    return (
-                      <td
-                        key={cellKey} 
-                        {...cellProps} 
-                        className="px-4 py-2 text-sm"
-                      >
-                        {cell.render('Cell')}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+          <table {...getTableProps()} className="min-w-full border-collapse">
+            <thead className="bg-gray-100">
+              {headerGroups.map((headerGroup) => {
+                const { key: headerKey, ...headerGroupProps } = headerGroup.getHeaderGroupProps();
+                return (
+                  <tr key={headerKey} {...headerGroupProps}>
+                    {headerGroup.headers.map((column) => {
+                      const { key: columnKey, ...columnProps } = column.getHeaderProps();
+                      return (
+                        <th
+                          key={columnKey}
+                          {...columnProps}
+                          className="border px-4 py-2 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                        >
+                          {column.render('Header')}
+                        </th>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </thead>
+            <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
+              {page.map((row) => {
+                prepareRow(row);
+                const { key: rowKey, ...rowProps } = row.getRowProps();
+                return (
+                  <tr
+                    key={rowKey}
+                    {...rowProps}
+                    className="hover:bg-gray-50 transition-colors cursor-pointer"
+                    onClick={() =>
+                      navigate(`/detail/${row.original.idTransaksi}`, {
+                        state: { transaksiDetail: row.original },
+                      })
+                    }
+                  >
+                    {row.cells.map((cell) => {
+                      const { key: cellKey, ...cellProps } = cell.getCellProps();
+                      return (
+                        <td
+                          key={cellKey}
+                          {...cellProps}
+                          className="px-4 py-2 text-sm"
+                        >
+                          {cell.render('Cell')}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
 
-        
         <div className="px-6 py-4 bg-gray-50 flex justify-between items-center">
           <div className="flex space-x-2">
             <button

@@ -13,7 +13,7 @@ const HeroSection = () => (
           <button className="bg-green-800 text-white px-4 py-1.5 rounded hover:bg-green-500 text-sm whitespace-nowrap mt-12">
             Unduh Aplikasi
           </button>
-          <Link className="nav-link" to="/Tentang">
+          <Link className="nav-link" to="/">
             <button className="bg-green-800 text-white px-4 py-1.5 rounded hover:bg-green-500 text-sm whitespace-nowrap mt-12">
               Lihat Selengkapnya
             </button>
